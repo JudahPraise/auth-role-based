@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\ResetPassword;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller
 {
@@ -18,5 +19,17 @@ class ForgotPasswordController extends Controller
     |
     */
 
-    use SendsPasswordResetEmails;
+    public function addCode(Request $request)
+    {
+        $code = new ResetPassword();
+
+        $code->email = $request->email;
+        $code->code = $request->code;
+
+        $code->save();\
+
+        session()->flash('success', 'Code set successfully!');
+        return redirect()->back();
+    }
+
 }

@@ -21,6 +21,9 @@ Auth::routes();
 
 Route::post('/login', 'Auth\LoginController@login')->name('auth.login');
 Route::post('/register', 'Auth\RegisterController@create')->name('auth.register');
+Route::post('/reset-password-code', 'Auth\ForgotPasswordController@addCode')->name('code.add');
+Route::put('/reset-password', 'Auth\ResetPasswordController@resetPassword')->name('reset.password');
+Route::get('/check-pass-code', 'Auth\ResetPasswordController@checkPassCode')->name('code.check');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/nurse', 'NurseController@index')->name('nurse');
 Route::get('/admin', 'AdminController@index')->name('admin');

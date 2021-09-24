@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -31,8 +32,11 @@ class LoginController extends Controller
         ]); 
         
         //* Attempt to log the user in
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password, 'role' => $request->role])) {
-           switch ($request->role) {
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            
+            $user = User::where('email','=',$request->email)->first();
+
+           switch ($user->role) {
                case 'Teacher':
                     return redirect()->intended(route('home'));
                     break;
